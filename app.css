@@ -9,15 +9,19 @@
 
 
 h1 {
-    color : rgb(184, 184, 21);
+    color : rgb(255, 255, 255);
 }
 
 body {
-    background-color : gray;
+    background-color : rgb(35, 35, 35);
+    background: linear-gradient(to right, #1a1a1a, #000000, #1a1a1a);
+    
 }
 
 #banner {
     /* Adjust height and width of banner */
     width: 100%; 
     height: 325px;
+    /*round them corners*/
+    border-radius: 10px;
 }
