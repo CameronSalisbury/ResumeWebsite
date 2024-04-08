@@ -9,19 +9,36 @@
 
 
 h1 {
+
     color : rgb(255, 255, 255);
+    text-align: center;
 }
 
 body {
     background-color : rgb(35, 35, 35);
     background: linear-gradient(to right, #1a1a1a, #000000, #1a1a1a);
-    
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    position: relative; /* Required for positioning pseudo-elements */
+    min-height: 100vh; /* Ensure the body takes at least the height of the viewport */
+}
+
+div {
+    display: flex;
+    justify-content: center;
 }
 
 #banner {
     /* Adjust height and width of banner */
-    width: 100%; 
+    width: 1250px;
     height: 325px;
     /*round them corners*/
     border-radius: 10px;
+    padding: 0 20;
+}
+
+#banner img{
+    display:block;
+    margin:0 auto;
 }
