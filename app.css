@@ -10,9 +10,20 @@ body {
     min-height: 100vh; /* Ensure the body takes at least the height of the viewport */
 }
 
-div {
+header {
     display: flex;
     justify-content: center;
+}
+
+.container {
+    width: 940px;
+    margin: auto;
+}
+
+#line {
+    width: 500px;
+    margin: auto;
+    border-top: 2px white;
 }
 
 #banner {
@@ -40,4 +51,11 @@ h2 {
     font-size: 15px;
     color : rgb(255, 255, 255);
     text-align: center;
+}
+
+p1{
+    font-size: 15px;
+    color : rgb(255, 255, 255);
+    width: 1250px;
+
 }
