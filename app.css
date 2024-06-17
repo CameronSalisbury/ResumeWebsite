@@ -2,15 +2,45 @@
 
 body {
     background-color : rgb(35, 35, 35);
-    /*background: linear-gradient(to right, #838383, #000000, #838383); -might do something with this later */
-    margin: 500;
-    padding: 0;
     font-family: Arial, sans-serif;
-    border-left: 10vw solid white;
-    border-right: 10vw solid white;
     position: relative; /* Required for positioning pseudo-elements */
     min-height: 100vh; /* Ensure the body takes at least the height of the viewport */
 }
+
+.left-border {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    width: 10vw;
+    border-left: 10vw solid rgb(26, 26, 26);
+}
+
+.right-border {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    width: 10vw;
+    border-right: 10vw solid rgb(26, 26, 26);
+}
+
+.content {
+    margin-left: 12vw; /* Adjust as needed to create space */
+    margin-right: 12vw; /* Adjust as needed to create space */
+    padding: 20px; /* Add padding inside the content area */
+}
+
+@media (max-width: 800px) {
+    .left-border, .right-border {
+        display: none;
+    }
+    .content {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
 
 header {
     display: flex;
