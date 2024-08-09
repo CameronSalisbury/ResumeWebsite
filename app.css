@@ -93,16 +93,21 @@ p1{
 }
 
 
-/* elements for connect 4 */
-table,
-output {
-  box-shadow: .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
+/*Center Images*/
+.table-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 20vh; /* Adjust based on your needs */
 }
+
+
+
+/* elements for connect 4 */
 table {
-    position: center;
   width: 50vh;
   border-collapse: collapse;
   border: 2vh solid rgb(50,50,50);
+  box-shadow: .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
 }
 td {
   width: calc( 50vh / 7 );
@@ -126,7 +131,6 @@ td.yellow:before {
   background: yellow;
 }
 output {
-  position: center;
   display: none;
   width: 50vh;
   height: 10vh;

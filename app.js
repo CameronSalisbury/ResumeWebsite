@@ -1,3 +1,4 @@
+
 var player = "red";
 const players = { "red": "yellow", "yellow": "red" },
   output = document.querySelector( "output" ),
