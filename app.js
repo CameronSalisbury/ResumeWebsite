@@ -1,72 +1,99 @@
+/*
+TODO:
+Figure this shit out
+turn this into a singleplayer game vs a bot
+Develop bot to rival
+Include difficulty settings (Depth level)
+*/
+const rows = 6;
+const cols = 7;
+const board = [];
+let currentPlayer = 'red';
+let isAIActive = true;
 
-var player = "red";
-const players = { "red": "yellow", "yellow": "red" },
-  output = document.querySelector( "output" ),
-  tbody = document.querySelector( "tbody" ),
-  rows = tbody.querySelectorAll( "tr" ),
-  prepArray = ( n ) => {
-    return Array( n ).fill( "" );
-  },
-  connect4 = ( strip ) => {
-    const rslt = /(?:(red){4}|(yellow){4})/.exec( strip );
-    if ( !!rslt ) {
-      output.classList.add( rslt[ 1 ] || rslt[ 2 ] );
-      return true;
+const initBoard = () => {
+    for (let r = 0; r < rows; r++) {
+        board[r] = Array(cols).fill(null);
     }
-    return false;
-  },
-  check4Winner = () => {
-    var strips = {
-          h: [],
-          v: prepArray( 7 ),
-          f: prepArray( 12 ),
-          b: prepArray( 12 )
-        },
-        strip, color, winner, dir;
-    rows.forEach( ( row, ri ) => {
-      strip = "";
-      row.querySelectorAll( "td" ).forEach( ( cell, ci ) => {
-        color = cell.getAttribute( "class" ) || " ";
-        strips.b[ ci - ri + rows.length - 1 ] += color;
-        strips.f[ ci + ri ] += color;
-        strips.v[ ci ] += color;
-        strip += color;
-      } );
-      strips.h.push( strip );
-      winner = winner || connect4( strip );
-    } );
-    
-    console.log( strips ); // game data object
-    
-    for ( dir in strips ) {
-      if ( !winner && strips.hasOwnProperty( dir ) ) {
-        strips[ dir ].forEach( ( s ) => {
-          winner = winner || connect4( s );
-        } );
-      }
+};
+
+const renderBoard = () => {
+    const boardElement = document.getElementById('game-board');
+    boardElement.innerHTML = '';
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < cols; c++) {
+            const cell = document.createElement('div');
+            cell.className = 'cell';
+            if (board[r][c]) {
+                cell.classList.add(board[r][c]);
+            }
+            cell.addEventListener('click', () => handleClick(c));
+            boardElement.appendChild(cell);
+        }
     }
-  },
-  dropCounter = ( ci ) => {
-    var cell, pc;
-    rows.forEach( ( row ) => {
-      if ( !( pc = row.childNodes[ ci ] ).getAttribute( "class" ) ) {
-        cell = pc;
-      }
-    } );
-    if ( cell ) {
-      cell.classList.add( player = players[ player ] );
-      check4Winner();
+};
+
+const handleClick = (col) => {
+    if (currentPlayer === 'yellow' && isAIActive) {
+      aiMove;
+      //setTimeout(aiMove, 150); // AI makes a move after a delay
+      return; // Skip if it's AI's turn
     }
-  };
-output.addEventListener( "click", () => {
-  output.removeAttribute( "class" );
-  tbody.querySelectorAll( "td" ).forEach( ( c ) => {
-    c.removeAttribute( "class" );
-  } );
-}, false );
-tbody.addEventListener( "click", ( evt ) => {
-  const trg = evt.target;
-  if ( !output.getAttribute( "class" ) && trg.tagName.toLowerCase() === "td" ) {
-    dropCounter( trg.cellIndex );
-  }
-}, false );
+    for (let r = rows - 1; r >= 0; r--) {
+        if (!board[r][col]) {
+            board[r][col] = currentPlayer;
+            renderBoard();
+            if (checkWin()) {
+                setTimeout(() => {
+                    alert(`${currentPlayer} wins!`);
+                    initBoard();
+                    renderBoard();
+                }, 100);
+                return;
+            }
+            currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+            return;
+        }
+    }
+};
+
+const checkWin = () => {
+    const checkDirection = (dr, dc) => {
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < cols; c++) {
+                const color = board[r][c];
+                if (color && checkLine(r, c, dr, dc, color)) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    };
+
+    const checkLine = (r, c, dr, dc, color) => {
+        for (let i = 0; i < 4; i++) {
+            const nr = r + i * dr;
+            const nc = c + i * dc;
+            if (nr < 0 || nr >= rows || nc < 0 || nc >= cols || board[nr][nc] !== color) {
+                return false;
+            }
+        }
+        return true;
+    };
+
+    return checkDirection(0, 1) || // horizontal
+           checkDirection(1, 0) || // vertical
+           checkDirection(1, 1) || // diagonal down-right
+           checkDirection(1, -1);  // diagonal down-left
+};
+
+const resetGame = () => {
+    initBoard();
+    renderBoard();
+};
+
+document.getElementById('reset').addEventListener('click', resetGame);
+
+initBoard();
+renderBoard();

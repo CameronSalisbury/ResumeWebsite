@@ -1,4 +1,8 @@
-
+/*
+TODO:
+Organise this better? (optional)
+Make margins that fill the shoulders of the page
+*/
 
 body {
     background-color : rgb(35, 35, 35);
@@ -65,6 +69,7 @@ header {
     /*round them corners*/
     border-radius: 20px;
     padding: 0 0;
+    box-shadow: .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
 }
 
 #banner img{
@@ -93,59 +98,45 @@ p1{
 }
 
 
-/*Center Images*/
+/*Center Stuff*/
 .table-container {
   display: flex;
   justify-content: center;
-  margin-top: 20vh; /* Adjust based on your needs */
 }
 
 
 
 /* elements for connect 4 */
-table {
-  width: 50vh;
-  border-collapse: collapse;
-  border: 2vh solid rgb(50,50,50);
-  box-shadow: .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
-}
-td {
-  width: calc( 50vh / 7 );
-  background: rgb(50,50,50);
-  cursor: default;
-  user-select: none;
-}
-td:before {
-  content: "";
-  display: block;
-  width: calc( 50vh / 7 );
-  height: calc( 50vh / 7 );
-  border-radius: 50%;
-  box-shadow: inset .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
-  background: white;
-}
-td.red:before {
-  background: red;
-}
-td.yellow:before {
-  background: yellow;
-}
-output {
-  display: none;
-  width: 50vh;
-  height: 10vh;
-  top: 10vh;
-  left: 5vh;
-  background: white;
+.game-container {
   text-align: center;
-  font: 5vh sans-serif;
-  line-height: 10vh;
+}
+
+#game-board {
+  background-color: rgb(50, 50, 50);
+  box-shadow: .5vh .5vh 2vh .5vh rgba( 0, 0, 0, .5 );
+  display: grid;
+  grid-template-columns: repeat(7, 50px);
+  grid-gap: 5px;
+  margin: 20px, auto;
+}
+
+.cell {
+  width: 50px;
+  height: 50px;
+  background-color: #ddd;
+  border-radius: 50%;
   cursor: pointer;
 }
-output:before {
-  content: attr( class );
+
+.cell.red {
+  background-color: red;
 }
-output.red,
-output.yellow {
-  display: block;
+
+.cell.yellow {
+  background-color: yellow;
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
 }
