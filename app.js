@@ -1,9 +1,7 @@
 /*
 TODO:
-Figure this shit out
-turn this into a singleplayer game vs a bot
-Develop bot to rival
-Include difficulty settings (Depth level)
+Include depth first AI
+Include difficulty settings button(Depth level)
 */
 const rows = 6;
 const cols = 7;
@@ -35,11 +33,7 @@ const renderBoard = () => {
 };
 
 const handleClick = (col) => {
-    if (currentPlayer === 'yellow' && isAIActive) {
-      aiMove;
-      //setTimeout(aiMove, 150); // AI makes a move after a delay
-      return; // Skip if it's AI's turn
-    }
+    //   
     for (let r = rows - 1; r >= 0; r--) {
         if (!board[r][col]) {
             board[r][col] = currentPlayer;
@@ -53,6 +47,13 @@ const handleClick = (col) => {
                 return;
             }
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+            // Check if it's the AI's turn and AI is active
+            if (currentPlayer === 'yellow' && isAIActive) {
+                // AI makes a move after a delay
+                setTimeout(() => {
+                    aiMove();
+                }, 150);
+            }
             return;
         }
     }
