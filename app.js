@@ -7,7 +7,10 @@ const rows = 6;
 const cols = 7;
 const board = [];
 let currentPlayer = 'red';
-let isAIActive = false;
+let isAIActive = true;
+let score = 22;
+let turn = 1;
+let depth = 3; //Interchangable
 
 //Create Board
 const initBoard = () => {
@@ -52,23 +55,22 @@ const handleClick = (col) => {
                 return; // End the function after announcing the win
             }
             currentPlayer = currentPlayer === 'red' ? 'yellow' : 'red';
+            // Check if it's the AI's turn and if AI is active
+            if (currentPlayer === 'yellow' && isAIActive) {
+                // AI makes a move after a delay
+                setTimeout(() => {
+                    aiMove();
+                }, 150);
+            }
             return; // End the function after processing the turn
         }
         
     }
 
-
-    // Check if it's the AI's turn and if AI is active
-    if (currentPlayer === 'yellow' && isAIActive) {
-        // AI makes a move after a delay
-        setTimeout(() => {
-            aiMove();
-        }, 150);
-    }
 };
 
 //Checkwin Library
-const checkWin = () => {
+const checkWin = (boardToCheck = board) => {
     const checkDirection = (dr, dc) => {
         for (let r = 0; r < rows; r++) {
             for (let c = 0; c < cols; c++) {
@@ -114,9 +116,31 @@ const aiMove = () => {
         }
     }
     
-    //Bogo AI
+    
     if (availableColumns.length > 0) {
+        //AI code
+        /*
+        score is points given based of AI moves
+        turn is used to suptrat from scroes
+        depth is the difficulty
+        */
+        //Bogo search
         const chosenCol = availableColumns[Math.floor(Math.random() * availableColumns.length)];
+
+        let chosenRow;
+        for (let r = rows - 1; r >= 0; r--) {
+            if (!board[r][chosenCol]) {
+                chosenRow = r;
+                break;
+            }
+        }
+
+        //for (i=0; i < depth; i++){
+            if (simulateMove(chosenRow, chosenCol, currentPlayer)) {
+                console.log(`Placing a ${currentPlayer} piece in column ${col} results in a win!`);
+            }
+        //};
+
         for (let r = rows - 1; r >= 0; r--) {
             if (!board[r][chosenCol]) {
                 board[r][chosenCol] = 'yellow'; // Assuming AI is 'yellow'
@@ -135,6 +159,20 @@ const aiMove = () => {
         }
     }
 };
+
+const copyBoard = (originalBoard) => {
+    return originalBoard.map(row => row.slice());
+};
+
+const simulateMove = (row, col, color) => {
+    //alert('test');
+    const tempBoard = copyBoard(board); // Create a copy of the board
+    tempBoard[row][col] = color; // Place the piece on the copy
+    const result = checkWin(tempBoard); // Check win condition on the copy
+    return result; // Return whether the move would result in a win
+};
+
+
 
 document.getElementById('reset').addEventListener('click', resetGame);
 
