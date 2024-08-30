@@ -136,7 +136,7 @@ const aiMove = () => {
         }
 
         //for (i=0; i < depth; i++){
-            if (simulateMove(chosenRow, chosenCol, currentPlayer)) {
+            if (simulateMove(chosenRow, chosenCol, currentPlayer, depth)) {
                 console.log(`Placing a ${currentPlayer} piece in column ${col} results in a win!`);
             }
         //};
@@ -164,11 +164,32 @@ const copyBoard = (originalBoard) => {
     return originalBoard.map(row => row.slice());
 };
 
-const simulateMove = (row, col, color) => {
+const simulateMove = (row, col, color, depth) => {
     //alert('test');
-    const tempBoard = copyBoard(board); // Create a copy of the board
-    tempBoard[row][col] = color; // Place the piece on the copy
+    const initialBoard = copyBoard(board); // Create a copy of the board
+    //tempBoard[row][col] = color; // Place the piece on the copy
     const result = checkWin(tempBoard); // Check win condition on the copy
+    // Add the first copy to the array of copies
+    copies.push(copyBoard(initialBoard));
+
+    // Generate additional copies based on the depth
+    for (let i = 0; i < depth; i++) {
+        const newCopies = [];
+        
+        // For each existing copy, make further copies
+        copies.forEach(copy => {
+            for (let j = 0; j < 6; j++) {
+                const tempBoard = copyBoard(copy);
+                tempBoard[j][row] = color; // Make the move on each copy
+                newCopies.push(tempBoard); // Add the new copy to the list
+            }
+        });
+        
+        // Update the copies array to the new list of copies
+        copies.length = 0; // Clear the existing copies
+        copies.push(...newCopies); // Add all new copies
+    }
+
     return result; // Return whether the move would result in a win
 };
 
