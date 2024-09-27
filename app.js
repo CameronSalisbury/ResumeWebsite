@@ -1,8 +1,10 @@
 /*
+old code before react
+
 TODO:
 Include depth first AI
 Include difficulty settings button(Depth level)
-*/
+
 const rows = 6;
 const cols = 7;
 const board = [];
@@ -119,11 +121,11 @@ const aiMove = () => {
     
     if (availableColumns.length > 0) {
         //AI code
-        /*
-        score is points given based of AI moves
-        turn is used to suptrat from scroes
-        depth is the difficulty
-        */
+        
+        //score is points given based of AI moves
+        //turn is used to suptrat from scroes
+        //depth is the difficulty
+        
         //Bogo search
         const chosenCol = availableColumns[Math.floor(Math.random() * availableColumns.length)];
 
@@ -199,3 +201,21 @@ document.getElementById('reset').addEventListener('click', resetGame);
 
 initBoard();
 renderBoard();
+
+*/
+
+// src/App.js
+
+import React from 'react';
+import Connect4 from './Connect4';
+
+const App = () => {
+  return (
+    <div className="App">
+      <h1>Connect 4</h1>
+      <Connect4 />
+    </div>
+  );
+};
+
+export default App;
