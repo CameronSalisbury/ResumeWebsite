@@ -207,7 +207,7 @@ renderBoard();
 // src/App.js
 
 import React from 'react';
-import Connect4 from './Connect4';
+import Connect4 from '/Connect4';
 
 const App = () => {
   return (
